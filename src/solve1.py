@@ -1,16 +1,6 @@
-import os
-import requests
+# day1_tasks.py
 from collections import Counter
-
-SESSION_TOKEN = os.getenv("SESSION_TOKEN")
-URL = "https://adventofcode.com/2024/day/1/input"
-
-
-def fetch_puzzle_input(url, session_token):
-    headers = {"Cookie": f"session={session_token}", "User-Agent": "Python script"}
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()  # Raise an error if the request failed
-    return response.text
+from common import fetch_puzzle_input
 
 
 def parse_puzzle_input(puzzle_input):
@@ -44,21 +34,25 @@ def calculate_similarity_score(left_list, right_list):
     return similarity_score
 
 
-# Fetch the puzzle input
-try:
-    puzzle_input = fetch_puzzle_input(URL, SESSION_TOKEN)
+def main():
+    # Fixed day number for the puzzle
+    day_number = 1
+
+    # Fetch the puzzle input for the given day
+    puzzle_input = fetch_puzzle_input(day_number)
     print("Puzzle input fetched successfully.")
-except requests.RequestException as e:
-    print(f"Error fetching input: {e}")
-    exit(1)
 
-# Parse the input into left and right lists
-left_list, right_list = parse_puzzle_input(puzzle_input)
+    # Parse the input into left and right lists
+    left_list, right_list = parse_puzzle_input(puzzle_input)
 
-# Calculate and print the total distance
-total_distance = calculate_total_distance(left_list, right_list)
-print(f"Total distance: {total_distance}")
+    # Calculate and print the total distance
+    total_distance = calculate_total_distance(left_list, right_list)
+    print(f"Total distance: {total_distance}")
 
-# Calculate and print the similarity score
-similarity_score = calculate_similarity_score(left_list, right_list)
-print(f"Similarity score: {similarity_score}")
+    # Calculate and print the similarity score
+    similarity_score = calculate_similarity_score(left_list, right_list)
+    print(f"Similarity score: {similarity_score}")
+
+
+if __name__ == "__main__":
+    main()
